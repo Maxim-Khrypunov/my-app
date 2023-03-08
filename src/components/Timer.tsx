@@ -1,5 +1,10 @@
-import React from "react"
-export const Timer:React.FC=()=>
+import React from "react";
+
+import timeZones from "../time-zones"
+type Props ={
+  cityCountry:string;
+}
+export const Timer:React.FC<Props>=({cityCountry})=>
 {
    
     const styles: React.CSSProperties= {backgroundColor:"lightblue", fontSize:"2em", color: "red",
@@ -22,22 +27,30 @@ export const Timer:React.FC=()=>
     }, []);
       
     let [changer,setChanger] = React.useState(stylesH2);
-   //  setTimeout(switfColor,5000)
-   //  let [changer,newColor] = React.useState(stylesH2);
-   //  function switfColor()
-   //  {
-   //      newColor(stylesH2New); 
-   //      setTimeout(restart,5000);  
-   //  }
-   //  function restart()
-   //  {
-   //     window.location.reload()
-   //  }
-    
+   
+      const findIndex = timeZones.findIndex((element)=>
+      {
+       return element.name.split("/")[1] == cityCountry || element.countryName == cityCountry;
+      });
+
+      function checking (indexForChecking:number)
+      {
+      const res = indexForChecking === -1 ? indexForChecking = 195 : indexForChecking;
+      return  res;
+      }
+      
+      const json = JSON.stringify(timeZones[checking(findIndex)])
+      const jsonObj = JSON.parse(json);
+
     return <div>
-    <h2 className="text" style ={changer}> Current time </h2>
-    <p style={styles}>{time.toLocaleTimeString()}</p>
+    <h2 style ={changer}> Current time {cityCountry}</h2>
+    <p style={styles}>{time.toLocaleTimeString(undefined,{timeZone:jsonObj.name})}</p>
     </div>
     }
 
+    // return <div>
+    // <h2 style ={changer}> Current time {cityCountry}</h2>
+    // <p style={styles}>{time.toLocaleTimeString(undefined,{timeZone:timeZones[checking(findIndex)].name})}</p>
+    // </div>
+    // }
 
