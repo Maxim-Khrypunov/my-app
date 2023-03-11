@@ -4,5 +4,5 @@ type Props = {
 }
 export const Alert: React.FC<Props> =({message}) =>
 {
-    return <div style={{border:"solid 1px red", color: "red"}}>{message}</div>;
+    return <div style={{border:"solid 1px red", color: "black", background: "red"}}>{message}</div>;
 }

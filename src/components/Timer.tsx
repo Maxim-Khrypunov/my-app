@@ -1,18 +1,19 @@
-import React from "react";
-
+import React, { useState } from "react";
+import { Input } from "./input";
 import timeZones from "../time-zones"
 type Props ={
   cityCountry:string;
 }
-export const Timer:React.FC<Props>=({cityCountry})=>
+export const Timer:React.FC<Props>=(props)=>
 {
    
     const styles: React.CSSProperties= {backgroundColor:"lightblue", fontSize:"2em", color: "red",
     textAlign:"center"}
-    let stylesH2: React.CSSProperties= {fontSize:"2em",color: "red",textAlign:"center"}
-    let stylesH2New: React.CSSProperties= {fontSize:"2em",color: "blue",textAlign:"center"}
+    let stylesH2: React.CSSProperties= {fontSize:"1.6em",color: "red",textAlign:"center"}
+    let stylesH2New: React.CSSProperties= {fontSize:"1.6em",color: "blue",textAlign:"center"}
     setTimeout(tic, 1000);
     const [time, setTime] = React.useState(new Date());
+    
     function tic()
     {
        setTime(new Date())
@@ -26,31 +27,35 @@ export const Timer:React.FC<Props>=({cityCountry})=>
       return () => clearInterval(interval);
     }, []);
       
-    let [changer,setChanger] = React.useState(stylesH2);
-   
-      const findIndex = timeZones.findIndex((element)=>
-      {
-       return element.name.split("/")[1] == cityCountry || element.countryName == cityCountry;
-      });
+      let [changer,setChanger] = React.useState(stylesH2);
 
-      function checking (indexForChecking:number)
-      {
-      const res = indexForChecking === -1 ? indexForChecking = 195 : indexForChecking;
-      return  res;
+      //HW33
+      const timeZoneIndex = timeZones.findIndex(index => JSON.stringify(index).includes(props.cityCountry));
+
+      const [timeZone, setTimeZone] = React.useState(timeZones[timeZoneIndex].name);
+
+      const [newtimeZone, NewsetTimeZone] = React.useState(props.cityCountry);
+     
+      function submit(value: string):string
+      { 
+        const index =  timeZones.findIndex(tz => JSON.stringify(tz).includes(value));
+        let res = '';
+        if (index === -1) {
+            res = `${value} is wrong city / country, please type again 
+            (The first letter of the city or country must be capitalized)`;
+        } else {
+            NewsetTimeZone(value);
+            setTimeZone(timeZones[index].name);
+        }
+        return res;
       }
-      
-      const json = JSON.stringify(timeZones[checking(findIndex)])
-      const jsonObj = JSON.parse(json);
 
-    return <div>
-    <h2 style ={changer}> Current time {cityCountry}</h2>
-    <p style={styles}>{time.toLocaleTimeString(undefined,{timeZone:jsonObj.name})}</p>
+    return <div>  
+    <Input submitFn={submit} placeHolder={"enter city or country"} buttonName = "Use new timezone"/>
+    <h2 style ={changer}>Current Time in {newtimeZone}</h2>
+    <p style={styles}>{time.toLocaleTimeString(undefined,{timeZone})}</p>
     </div>
     }
 
-    // return <div>
-    // <h2 style ={changer}> Current time {cityCountry}</h2>
-    // <p style={styles}>{time.toLocaleTimeString(undefined,{timeZone:timeZones[checking(findIndex)].name})}</p>
-    // </div>
-    // }
+
 

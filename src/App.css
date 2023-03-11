@@ -1,5 +1,5 @@
 .Appl{
-  font-size: 2em;
+  font-size: 1,5em;
 }
 .text
 {
@@ -20,6 +20,6 @@ body{
   background-image: url(/pic/1233.jpg);
   background-size: no-repeat;
   background-position: center;
-  background-size: 170%;
+  background-size: 100%;
 
 }
