@@ -30,15 +30,16 @@ export const Timer:React.FC<Props>=(props)=>
       let [changer,setChanger] = React.useState(stylesH2);
 
       //HW33
-      const timeZoneIndex = timeZones.findIndex(index => JSON.stringify(index).includes(props.cityCountry));
+      const StartTimeZoneIndex = timeZones.findIndex(element => JSON.stringify(element).includes(props.cityCountry));
 
-      const [timeZone, setTimeZone] = React.useState(timeZones[timeZoneIndex].name);
+      const [timeZone, setTimeZone] = React.useState(timeZones[StartTimeZoneIndex].name);
 
-      const [newtimeZone, NewsetTimeZone] = React.useState(props.cityCountry);
+      const [newtimeZone, NewsetTimeZone] = React.useState(props.cityCountry); 
      
       function submit(value: string):string
       { 
-        const index =  timeZones.findIndex(tz => JSON.stringify(tz).includes(value));
+        value = value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
+        const index =  timeZones.findIndex(element => JSON.stringify(element).includes(value));
         let res = '';
         if (index === -1) {
             res = `${value} is wrong city / country, please type again 
