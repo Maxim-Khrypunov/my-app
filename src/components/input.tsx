@@ -18,7 +18,9 @@ export const Input: React.FC<Props> = ({submitFn,placeHolder,buttonName}) =>
     },[]);
     function inputProcess()
     {
-    setMessage(submitFn(inputElement.current!.value))
+    const tempMessege= submitFn(inputElement.current!.value);
+    if (!tempMessege) inputElement.current!.value ="";
+    else setMessage(submitFn(inputElement.current!.value))
     }
     return <div>
         <input type="text" placeholder={placeHolder} id={id.current}/>

@@ -3,9 +3,6 @@ import React from 'react';
 import './App.css';
 import { Timer } from './components/Timer';
 
-
-
-
 function App()
 {
   return  <section className='section'><h2 className='firstCoupel'>

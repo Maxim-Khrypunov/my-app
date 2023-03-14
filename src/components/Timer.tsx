@@ -20,6 +20,8 @@ export const Timer:React.FC<Props>=(props)=>
     } 
     const intervalDuration = 10000;
 
+    let [changer,setChanger] = React.useState(stylesH2);
+
     React.useEffect(() => {
       const interval = setInterval(() => {
         setChanger((styleColor) => styleColor === stylesH2 ? stylesH2New : stylesH2);
@@ -27,14 +29,14 @@ export const Timer:React.FC<Props>=(props)=>
       return () => clearInterval(interval);
     }, []);
       
-      let [changer,setChanger] = React.useState(stylesH2);
+    
 
       //HW33
       const StartTimeZoneIndex = timeZones.findIndex(element => JSON.stringify(element).includes(props.cityCountry));
 
       const [timeZone, setTimeZone] = React.useState(timeZones[StartTimeZoneIndex].name);
 
-      const [newtimeZone, NewsetTimeZone] = React.useState(props.cityCountry); 
+      const [nameofCountryOrCityTimeZone, NewsetTimeZone] = React.useState(props.cityCountry); 
      
       function submit(value: string):string
       { 
@@ -53,7 +55,7 @@ export const Timer:React.FC<Props>=(props)=>
 
     return <div>  
     <Input submitFn={submit} placeHolder={"enter city or country"} buttonName = "Use new timezone"/>
-    <h2 style ={changer}>Current Time in {newtimeZone}</h2>
+    <h2 style ={changer}>Current Time in {nameofCountryOrCityTimeZone}</h2>
     <p style={styles}>{time.toLocaleTimeString(undefined,{timeZone})}</p>
     </div>
     }
