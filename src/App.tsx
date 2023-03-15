@@ -1,16 +1,25 @@
 import React from 'react';
 
 import './App.css';
-import { Timer } from './components/Timer';
+import { CounterMultiply } from './components/CounterMultiply';
+import { CounterSquare } from './components/CounterSquare';
+import { CounterUpdater } from './components/CounterUpdater';
+import { Login } from './components/Login';
+import { Logout } from './components/Logout';
 
 function App()
 {
-  return  <section className='section'><h2 className='firstCoupel'>
-    <div className='firstCountry'> <Timer cityCountry="Toronto" /></div>
-    <div className='secondCountry'> <Timer cityCountry="London" /></div></h2>
-    <h2 className='secondeCoupel'><div className='thirdCountry'> <Timer cityCountry="Japan" /></div>
-    <div className='fourCountry'><Timer cityCountry="Jerusalem" />
-    </div></h2></section>;
+
+
+
+  
+  return  <div style={{display: 'flex' , alignItems: 'center', flexDirection: 'column'}}>
+    <Login/> 
+    <Logout/>
+    <CounterUpdater operand={10}/>
+    <CounterMultiply factor={2}/>
+    <CounterSquare/>
+  </div>
 }
 
 export default App;
