@@ -6,20 +6,18 @@ import { CounterUpdater } from './components/CounterUpdater';
 import { CounterMultiply } from './components/CounterMultiply';
 import { Logout } from './components/Logout';
 
-const StateMachine: React.FC = () => {   
-  const authUser= useSelector<any, string>(state=>state.auth.authUser);
-  return <p>{!authUser && <Login/>}
-  {authUser && !authUser.includes("admin")&&(<><CounterUpdater operand={2}/><CounterSquare/><Logout/></>)}
-  {authUser && authUser.includes('admin') && 
-    (<><CounterUpdater operand={2} reset={true}/><CounterMultiply factor={2}/><CounterSquare/><Logout/></>)}
+function App()
+ {
+  const StateMachine: React.FC = () => {   
+  const NewauthUser= useSelector<any, string>(state=>state.auth.authUser);
+  return <p>{!NewauthUser && <Login/>}
+  {NewauthUser && !NewauthUser.includes("admin")&&(<><CounterUpdater operand={5}/><CounterSquare/><Logout/></>)}
+  {NewauthUser && NewauthUser.includes('admin') && 
+    (<><CounterUpdater operand={5} reset={true}/><CounterMultiply factor={5}/><CounterSquare/><Logout/></>)}
   </p>
 }
-
-
-function App()
-{
   return  <div style={{display: 'flex', alignItems: 'center',
-  flexDirection: 'column', marginTop: '15vh'}}>
+  flexDirection: 'column', marginTop: '20vh', backgroundColor: 'green'}}>
   <StateMachine/>
   </div>
 }

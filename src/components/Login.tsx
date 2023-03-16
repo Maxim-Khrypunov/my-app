@@ -8,12 +8,13 @@ export const Login: React.FC = () =>
     const dispatch = useDispatch();
     const submit = (value: string):any =>
     { 
-      let res:string = value;
+      let res:string = value
       dispatch(authUserActions.login(res))
       return res;
     }
 
     return <div>
+
     <Input submitFn={submit} placeHolder={"Enter login or admin"} buttonName = "OK" /> 
     </div>
 }
