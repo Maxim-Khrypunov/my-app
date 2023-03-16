@@ -4,6 +4,7 @@ import { counterActions } from "../redux/counterSlice";
 type Props =
 {
     operand:number
+    reset?:boolean
 }
 export const CounterUpdater: React.FC<Props> = ({operand}) =>
 {

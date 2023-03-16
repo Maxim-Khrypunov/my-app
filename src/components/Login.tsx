@@ -6,14 +6,14 @@ import { authUserActions } from "../redux/authSlice";
 export const Login: React.FC = () =>
 {
     const dispatch = useDispatch();
-    function submit(value: string):any
+    const submit = (value: string):any =>
     { 
-      let res =  dispatch(authUserActions.login(value))
+      let res:string = value;
+      dispatch(authUserActions.login(res))
       return res;
     }
-    
+
     return <div>
-    <h3>Login</h3>
     <Input submitFn={submit} placeHolder={"Enter login or admin"} buttonName = "OK" /> 
     </div>
 }

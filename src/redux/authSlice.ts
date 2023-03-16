@@ -10,10 +10,10 @@ reducers:
 {
  login: (state, data) =>
  {
-//  if (!state.authUser)
  state.authUser =  data.payload
  },
- logout:(state) => {state.authUser = initialState.authUser}
+ logout:(state) => 
+ {state.authUser = initialState.authUser}
 }
 });
 export const authUserActions = authUserSlice.actions;
