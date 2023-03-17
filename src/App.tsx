@@ -11,7 +11,7 @@ function App()
   const StateMachine: React.FC = () => {   
   const NewauthUser= useSelector<any, string>(state=>state.auth.authUser);
   return <p>{!NewauthUser && <Login/>}
-  {NewauthUser && !NewauthUser.includes("admin")&&(<><CounterUpdater operand={5}/><CounterSquare/><Logout/></>)}
+  {NewauthUser && !NewauthUser.includes("admin")&&(<><CounterUpdater operand={5} reset={false}/><CounterSquare/><Logout/></>)}
   {NewauthUser && NewauthUser.includes('admin') && 
     (<><CounterUpdater operand={5} reset={true}/><CounterMultiply factor={5}/><CounterSquare/><Logout/></>)}
   </p>

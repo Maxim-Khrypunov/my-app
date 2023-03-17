@@ -6,12 +6,12 @@ type Props =
     operand:number
     reset?:boolean
 }
-export const CounterUpdater: React.FC<Props> = ({operand}) =>
+export const CounterUpdater: React.FC<Props> = ({operand, reset}) =>
 {
     const dispatch = useDispatch();
     return <div> 
         <button onClick={()=> dispatch(counterActions.increment(operand))}>Increment</button>
         <button onClick={()=> dispatch(counterActions.decrement(operand))}> Decrement</button>
-        <button onClick={()=> dispatch(counterActions.reset())}> Reset </button>
+        {reset && <button onClick={()=> dispatch(counterActions.reset())}> Reset </button>}
     </div>
 }

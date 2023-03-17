@@ -15,7 +15,7 @@ export const Login: React.FC = () =>
 
     return <div>
 
-    <Input submitFn={submit} placeHolder={"Enter login or admin"} buttonName = "OK" /> 
+    <Input submitFn={submit} placeHolder={"Enter username"} buttonName = "Enter" /> 
     </div>
 }
 
