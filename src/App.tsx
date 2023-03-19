@@ -1,24 +1,25 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { Login } from './components/Login';
-import { CounterSquare } from './components/CounterSquare';
-import { CounterUpdater } from './components/CounterUpdater';
-import { CounterMultiply } from './components/CounterMultiply';
-import { Logout } from './components/Logout';
+import { type } from 'os';
+import React, { ReactNode } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { Cell } from './components/Cell';
+import { CellType } from './model/CellType';
+import { gameActions } from './redux/gameSlice';
+
 
 function App()
  {
-  const StateMachine: React.FC = () => {   
-  const NewauthUser= useSelector<any, string>(state=>state.auth.authUser);
-  return <p>{!NewauthUser && <Login/>}
-  {NewauthUser && !NewauthUser.includes("admin")&&(<><CounterUpdater operand={5} reset={false}/><CounterSquare/><Logout/></>)}
-  {NewauthUser && NewauthUser.includes('admin') && 
-    (<><CounterUpdater operand={5} reset={true}/><CounterMultiply factor={5}/><CounterSquare/><Logout/></>)}
-  </p>
-}
-  return  <div style={{display: 'flex', alignItems: 'center',
-  flexDirection: 'column', marginTop: '20vh', backgroundColor: 'green'}}>
-  <StateMachine/>
+  const cells = useSelector<any, CellType[]| string>(state=>state.gameRow.cells);
+  const dispatch = useDispatch();
+  function getRow(): ReactNode
+  {if (typeof cells == "string")
+  {return <p> Game is over</p>}
+    return cells.map(cell => <Cell width={'5vw'} cell={cell} 
+    clickFn={function (id: number): void {
+    dispatch(gameActions.move(id))
+    } }/>)
+  }
+  return <div style={{display:"flex"}}>
+  {getRow()}
   </div>
 }
 
