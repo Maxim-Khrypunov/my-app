@@ -2,6 +2,7 @@ import { type } from 'os';
 import React, { ReactNode } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Cell } from './components/Cell';
+import { Reset } from './components/resert';
 import { CellType } from './model/CellType';
 import { gameActions } from './redux/gameSlice';
 
@@ -12,15 +13,15 @@ function App()
   const dispatch = useDispatch();
   function getRow(): ReactNode
   {if (typeof cells == "string")
-  {return <p> Game is over</p>}
+  {return <div><p><Reset/></p><p> Game is over</p></div>}
     return cells.map(cell => <Cell width={'5vw'} cell={cell} 
     clickFn={function (id: number): void {
     dispatch(gameActions.move(id))
     } }/>)
   }
-  return <div style={{display:"flex"}}>
+  return <p><div style={{display:"flex"}}>
   {getRow()}
-  </div>
+  </div></p>
 }
 
 export default App;
