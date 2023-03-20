@@ -13,7 +13,7 @@ function App()
   const dispatch = useDispatch();
   function getRow(): ReactNode
   {if (typeof cells == "string")
-  {return <div><p><Reset/></p><p> Game is over</p></div>}
+  {return <div><p>Game is over</p><p><Reset/></p></div>}
     return cells.map(cell => <Cell width={'5vw'} cell={cell} 
     clickFn={function (id: number): void {
     dispatch(gameActions.move(id))
