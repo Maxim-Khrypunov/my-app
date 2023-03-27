@@ -89,3 +89,14 @@ test("text size of row Matrix", ()=>{
     expect(SizeOfNewMatrix[4].length).toEqual(5) 
 })
 
+test('test sum of part function', () => {
+    const startMatrix = new LifeMatrix
+    ([[0,0,0,0,0], 
+    [0,0,1,0,0],
+    [0,0,1,0,0],
+    [0,0,1,0,0],
+    [0,0,0,0,0]]);
+    const partMatrix = startMatrix.getMatrixPart(4,4);
+    expect(sumMatrix(partMatrix)).toEqual(0)
+})
+
