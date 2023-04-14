@@ -1,0 +1,22 @@
+.navigator-list
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    list-style: none;
+    width: 80vw;
+}
+.navigator-item
+{
+margin-left: 4vw;
+}
+.navigator-sublist
+{
+   flex-direction: column;
+}
+.active
+{
+    background-color: blue;
+    color:white;
+    font-size: 1.2em;
+}
