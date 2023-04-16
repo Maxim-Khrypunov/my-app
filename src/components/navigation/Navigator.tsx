@@ -6,18 +6,18 @@ import './navigators.css'
 type Props=
 {
     subnavigator?:boolean,
-    route:TypeOFRouteForNavigator[]  
+    routes:TypeOFRouteForNavigator[]  
 }
-export const Navigator: React.FC<Props> =({subnavigator,route}) =>
+export const Navigator: React.FC<Props> =({subnavigator,routes}) =>
 {
     const navigator = useNavigate()
    useEffect(()=>{ 
    if(!subnavigator)
-   {navigator(route[0].path)}},[])
+   {navigator(routes[0].path)}},[])
 
     function getElements()
     {
-        return route.map((elem,index)=>
+        return routes.map((elem,index)=>
         <li className="navigator-item"><NavLink to={elem.path} key={index}>{elem.element}</NavLink></li>
         )
     }

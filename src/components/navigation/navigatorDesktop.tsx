@@ -1,10 +1,10 @@
 import { AppBar, Box, Tabs, Tab } from "@mui/material";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import React, { ReactNode, useEffect } from "react";
-import { RouteType } from "../../model/RouteType";
+import { TypeOFRouteForNavigator } from "../../model/TypeOFRouteForNavigator";
 export type Props = {
     subnav?: boolean,
-    routes: RouteType[]
+    routes: TypeOFRouteForNavigator[]
 }
 export const NavigatorDesktop: React.FC<Props> = ({subnav, routes}) => {
     const [value, setValue] = React.useState(0);
@@ -15,14 +15,12 @@ export const NavigatorDesktop: React.FC<Props> = ({subnav, routes}) => {
             setValue(0)
         }
          }, [routes])
-    const handleChange = (event: any, newValue: number) => {
+    const handleChange = (event:any, newValue: number) => {
       setValue(newValue);
     };
   function getTabs(): ReactNode {
     return routes.map((route, index) => <Tab key={index} component={Link}
-     to={route.path} label={route.label}/>
-    
-    )
+     to={route.path} label={route.element}/>)
   }
  return <Box sx={{marginTop: "10vh"}}>
     <AppBar sx={{backgroundColor: "lightgray"}}>

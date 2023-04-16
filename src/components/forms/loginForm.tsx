@@ -18,27 +18,26 @@ function Copyright(props: any) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
-      <Link color="inherit" href="https://.tel-ran.com">
-        Tel-Ran
+      <Link color="inherit" href="https://www.tel-ran.com/">
+       Tel-Ran
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
     </Typography>
   );
 }
-
+ 
 const theme = createTheme();
-type Props={
-submitFn:(loginData:LoginData)=>void
+type Props = {
+    submitFn: (loginData: LoginData)=> void
 }
-
-export const LoginForm: React.FC<Props> = ({submitFn})=> {
+export const LoginForm: React.FC<Props> = ({submitFn}) => {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
+    submitFn({
       email: data.get('email') as string,
-      password: data.get('password'),
+      password: data.get('password') as string,
     });
   };
 
