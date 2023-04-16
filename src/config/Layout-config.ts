@@ -1,11 +1,11 @@
-import { RouteType } from "../model/RouteType";
+import { TypeOFRouteForNavigator } from "../model/TypeOFRouteForNavigator"
 
-export const routes: RouteType[] = [
-    {path: '/', label: 'Home', authenticated: true},
-    {path: '/customers', label: 'Customers', admin:true},
-    {path: '/shoppingcart', label: 'Shopping Cart', authenticated: true},
-    {path: '/orders', label: 'Orders', authenticated: true},
-    {path: '/products', label: 'Products', always: true},
-    {path: '/login', label: "Login", no_authenticated:true},
-    {path: '/logout', label: "Logout", authenticated: true},
+
+export const routeElements: TypeOFRouteForNavigator[]=[
+    {path: '/', element: 'Home'},
+    {path: '/customers', element: 'Customers'},
+    {path: '/shoppingcart', element: 'Shopping Cart'},
+    {path: '/orders', element: 'Orders'},
+    {path: '/products', element: 'Products'},
+
 ]

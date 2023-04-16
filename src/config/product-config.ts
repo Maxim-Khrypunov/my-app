@@ -1,7 +1,8 @@
-import { RouteType } from "../model/RouteType";
 
-export const routesProduct: RouteType[] = [
+import { TypeOFRouteForNavigator } from "../model/TypeOFRouteForNavigator";
+
+export const routesElementsForProduct: TypeOFRouteForNavigator[] = [
     
-    {path: '/products/dairy', label: 'Dairy Products'},
-    {path: '/products/bread', label: 'Bread Products'},
+    {path: '/products/dairy', element : 'Dairy Products'},
+    {path: '/products/bread', element: 'Bread Products'},
 ]

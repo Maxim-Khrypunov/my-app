@@ -1,32 +1,29 @@
-import { ReactNode, useEffect } from "react"
 import { NavLink, Outlet, useNavigate } from "react-router-dom"
-import { RouteType } from "../../model/RouteType"
+import { TypeOFRouteForNavigator } from "../../model/TypeOFRouteForNavigator"
+import {useEffect} from "react"
 import './navigators.css'
-type Props = {
-    subnav?: boolean,
-    routes: RouteType[]
+
+type Props=
+{
+    subnavigator?:boolean,
+    route:TypeOFRouteForNavigator[]  
 }
-export const Navigator: React.FC<Props> = ({ subnav, routes }) => {
-    const navigate = useNavigate();
-    useEffect(() => {
-         if (!subnav){
-            navigate(routes[0].path)
-        }
-         }, [])
-    function getItems(): ReactNode {
-        return routes.map((route, index) =>
-            <li className="navigator-item" key={index}>
-                <NavLink to={route.path}>{route.label}
-                </NavLink></li>)
+export const Navigator: React.FC<Props> =({subnavigator,route}) =>
+{
+    const navigator = useNavigate()
+   useEffect(()=>{ 
+   if(!subnavigator)
+   {navigator(route[0].path)}},[])
+
+    function getElements()
+    {
+        return route.map((elem,index)=>
+        <li className="navigator-item"><NavLink to={elem.path} key={index}>{elem.element}</NavLink></li>
+        )
     }
+
     return <div style={{marginTop:"10vh"}}>
-        <nav>
-          <ul className={`navigator-list ${subnav ? 'navigator-sublist' : ''}`}>
-            {getItems()}
-        </ul>  
-        </nav>
-        
-        <Outlet></Outlet>
+    <ul className={`subnavigator-item ${subnavigator ? 'subnavigator-sublist' : ''}`}>{getElements()}</ul>  
+    <Outlet></Outlet>
     </div>
 }
-
