@@ -2,55 +2,56 @@ import { productsService } from "../config/products-service-config";
 import productsConfig from "../config/products-config.json"
 import { getRandomElement, getRandomNumbers } from "./random";
 
-// test("setProducts test", ()=> {
-// productsService.setProducts().then(count => {
-// expect(count).toEqual(productsConfig.length)
-// })
-// })
+test("setProducts test", ()=> {
+productsService.setProducts().then(count => {
+expect(count).toEqual(productsConfig.length)
+})
+})
 
-// test ("category bread exists", () =>
-// {
-//     productsService.isCategoryExist("bread").then(res => expect(res).toBeTruth())
-// })
+test ("category bread exists", () =>
+{
+    productsService.isCategoryExist("bread").then(res => expect(res).toBeTruthy())
+})
 
-// // Home work 42
+
+
+// Home work 42
  
-// test ("Random category exists", ()=>
-// {
-//     const categories = productsConfig.map(pc =>
-//         {
-//             const category = pc.name.split("-")[0];
-//             return category
-//         })
+test ("Random category exists", ()=>
+{
+    const categories = productsConfig.map(pc =>
+        {
+            const category = pc.name.split("-")[0];
+            return category
+        })
 
-//     console.log(categories)
-//     const number = getRandomNumbers(0,productsConfig.length)
+    console.log(categories)
+    const number = getRandomNumbers(0,productsConfig.length)
     
-//     productsService.isCategoryExist(categories[number]).then(res => expect(res).toBeTruth())
-// })
+    productsService.isCategoryExist(categories[number]).then(res => expect(res).toBeTruth())
+})
 
-test ("All categories exist", async ()=>
+test ("All categories exist",  ()=>
 {
 const categories = productsConfig.map(pc =>
     {
         const category = pc.name.split("-")[0];
         return category
     })
-return await Promise.all(categories.map(element=>productsService.isCategoryExist(element))).
-then(res => console.log(res))
+Promise.all(categories.map(element=>productsService.isCategoryExist(element))).
+then(res => expect(res).toBeTruth())
 })
 
+test ("remove category", ()=>
+{
+productsService.removeCategory("cake")
+productsService.isCategoryExist("cake").then(res => expect(res).toBeFalse())
+})
 
-// test ("remove category", ()=>
-// {
-// productsService.removeCategory("cake")
-// productsService.isCategoryExist("cake").then(res => expect(res).toBeFalse())
-// })
-
-// test ("add category",()=>
-// {
-// productsService.addCategory({name:"matzo"})
-// productsService.isCategoryExist("matzo").then(res => expect(res).toBeTruthy())
-// })
+test ("add category",()=>
+{
+productsService.addCategory({name:"matzo"})
+productsService.isCategoryExist("matzo").then(res => expect(res).toBeTruthy())
+})
 
 
