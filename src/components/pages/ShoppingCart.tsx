@@ -1,4 +1,4 @@
 export const ShoppingCart: React.FC=()=>
 {
-    return <h2>Shopping Cart loadded</h2>
+    return <h2>Shopping Cart loaded</h2>
 }

@@ -2,7 +2,7 @@ import { TypeOFRouteForNavigator } from "../model/TypeOFRouteForNavigator"
 
 
 export const routeElements: TypeOFRouteForNavigator[]=[
-    {path: '/', element: 'Home', authenticated:true},
+    {path: '/', element: 'Home', always:true},
     {path: '/customers', element: 'Customers',  admin:true},
     {path: '/shoppingcart', element: 'Shopping Cart', authenticated:true},
     {path: '/orders', element: 'Orders', authenticated:true},

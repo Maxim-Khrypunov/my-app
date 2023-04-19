@@ -2,6 +2,7 @@ import { AppBar, Box, Tabs, Tab } from "@mui/material";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import React, { ReactNode, useEffect } from "react";
 import { TypeOFRouteForNavigator } from "../../model/TypeOFRouteForNavigator";
+import './navigators.css'
 export type Props = {
     subnav?: boolean,
     routes: TypeOFRouteForNavigator[]
@@ -22,7 +23,7 @@ export const NavigatorDesktop: React.FC<Props> = ({subnav, routes}) => {
     return routes.map((route, index) => <Tab key={index} component={Link}
      to={route.path} label={route.element}/>)
   }
- return <Box sx={{marginTop: "10vh"}}>
+ return <Box sx={{marginTop: "10vh", backgroundColor:"yellow"}}>
     <AppBar sx={{backgroundColor: "lightgray"}}>
         <Tabs value={value>routes.length? 0 :value} onChange={handleChange}>
             {getTabs()}

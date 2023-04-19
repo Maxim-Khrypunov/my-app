@@ -1,8 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { AUTH_USER_ITEM } from "../config/auth-service-config";
 
 const initialState: {userAuth:string}=
 {
-    userAuth:""
+    userAuth: localStorage.getItem(AUTH_USER_ITEM) || ""
 }
  const authSlice = createSlice({
     initialState:initialState,
@@ -14,7 +15,7 @@ const initialState: {userAuth:string}=
     },
     logout:(state)=>
     {
-        state.userAuth = initialState.userAuth
+        state.userAuth = ""
     }
     }
  })
