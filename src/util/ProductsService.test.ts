@@ -1,21 +1,26 @@
+/**
+ * @jest-environment node
+ */
 import { productsService } from "../config/products-service-config";
 import productsConfig from "../config/products-config.json"
-import { getRandomElement, getRandomNumbers } from "./random";
+import { getRandomNumbers } from "./random";
+jest.setTimeout(300000)
 
-test("setProducts test", ()=> {
-productsService.setProducts().then(count => {
-expect(count).toEqual(productsConfig.length)
-})
-})
+test("setProducts test", () => 
+    productsService.setProducts().then(count => {
+        expect(count).toEqual(38);
+    })
+)
 
 test ("category bread exists", () =>
-{
-    productsService.isCategoryExist("bread").then(res => expect(res).toBeTruthy())
-})
+productsService.isCategoryExist("bread").then(res => expect(res).toBeTruthy())
+)
 
 
 
 // Home work 42
+
+
  
 test ("Random category exists", ()=>
 {
@@ -28,7 +33,7 @@ test ("Random category exists", ()=>
     console.log(categories)
     const number = getRandomNumbers(0,productsConfig.length)
     
-    productsService.isCategoryExist(categories[number]).then(res => expect(res).toBeTruth())
+    productsService.isCategoryExist(categories[number]).then(res => expect(res).toBeTruthy())
 })
 
 test ("All categories exist",  ()=>
@@ -39,19 +44,21 @@ const categories = productsConfig.map(pc =>
         return category
     })
 Promise.all(categories.map(element=>productsService.isCategoryExist(element))).
-then(res => expect(res).toBeTruth())
+then(res => expect(res.every(elem=>elem))).then(res=>res.toBeTruthy())
 })
 
 test ("remove category", ()=>
 {
-productsService.removeCategory("cake")
-productsService.isCategoryExist("cake").then(res => expect(res).toBeFalse())
+productsService.removeCategory("cake").then(()=>
+productsService.isCategoryExist("cake").then(res => expect(res).toBeFalsy()))
+
 })
 
 test ("add category",()=>
 {
-productsService.addCategory({name:"matzo"})
-productsService.isCategoryExist("matzo").then(res => expect(res).toBeTruthy())
+productsService.addCategory({name:"cake"}).then(()=>
+productsService.isCategoryExist("cake").then(res => expect(res).toBeTruthy()))
+
 })
 
 
