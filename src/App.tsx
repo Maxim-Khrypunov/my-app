@@ -12,16 +12,20 @@ import { Navigator } from './components/navigation/Navigator';
 import { routeElements } from './config/Layout-config';
 import { routesElementsForProduct } from './config/product-config';
 import { NavigatorDesktop } from './components/navigation/NavigatorDesktop';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { TypeOFRouteForNavigator } from './model/TypeOFRouteForNavigator';
 import { Login } from './components/pages/Login';
 import { Logout } from './components/pages/Logout';
+import { productsService } from './config/products-service-config';
+import { productsActions } from './redux/productsSlice';
+import { ProductType } from './model/Product Type';
+import { Products } from './components/pages/Products';
 
 
 function App() {
    const newUserAuth = useSelector<any,string>(state =>state.auth.userAuth)
    const [newRoutes, setRoutes] = useState(getRoutes());
-   
+   const dispatch = useDispatch()
    function getRoutes():TypeOFRouteForNavigator[]
    {
       const routesRes =routeElements.filter(routePredicate)
@@ -40,6 +44,15 @@ function App() {
       setRoutes(getRoutes())
    },[newUserAuth]
    )
+   useEffect(()=>{
+      const subscription =productsService.getProducts()
+      .subscribe({
+         next:(products: ProductType[])=>{ 
+            console.log(products)
+            dispatch(productsActions.setProducts(products))}
+      })
+      return () =>subscription.unsubscribe()
+   })
    return <BrowserRouter>
       <Routes>
 
@@ -48,18 +61,12 @@ function App() {
             <Route path="/customers" element={<Customers />} />
             <Route path="orders" element={<Orders />} />
             <Route path="shoppingcart" element={<ShoppingCart />} />
-            <Route path="products" element={<Navigator subnavigator routes={routesElementsForProduct} />}>
-               <Route path="dairy" element={<Dairy />} />
-               <Route path="bread" element={<Bread />} />
-               
-            </Route>
+            <Route path="products" element={<Products/>}/>  
             <Route path="login" element={<Login />} />
             <Route path="logout" element={<Logout/>} />
             <Route path="/*" element={<NotFound/>} />
-            </Route>
-            
             <Route path="/*" element={<NotFound/>} />
-
+          </Route>
       </Routes>
    </BrowserRouter>
 }

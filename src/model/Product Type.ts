@@ -5,4 +5,5 @@ export type ProductType =
     category: string;
     unit: string;
     cost: number;
+    image: string;
 }
