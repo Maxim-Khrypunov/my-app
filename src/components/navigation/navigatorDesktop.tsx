@@ -23,7 +23,17 @@ export const NavigatorDesktop: React.FC<Props> = ({subnav, routes}) => {
     return routes.map((route, index) => <Tab key={index} component={Link}
      to={route.path} label={route.element}/>)
   }
- return <Box sx={{marginTop: "10vh", backgroundColor:"yellow"}}>
+ return <Box sx={{
+  backgroundImage: 'url(https://img4.goodfon.ru/wallpaper/nbig/0/55/vypechka-bulochki-fon.jpg)',
+  width: "100%",
+  height: "100%",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  marginTop:"10vh",
+  marginBottom: "0"
+  
+}}>
     <AppBar sx={{backgroundColor: "lightgray"}}>
         <Tabs value={value>routes.length? 0 :value} onChange={handleChange}>
             {getTabs()}

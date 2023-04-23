@@ -1,18 +1,1 @@
-.Appl{
-  font-size: 5em;
-}
-.text
-{
-  color : yellow
-}
 
-.firstCoupel, .secondeCoupel
-{
-  display: flex;
-  justify-content: center;
-}
-.firstCountry, .secondCountry, .thirdCountry, .fourCountry
-{
-  margin-left: 1em;
-  margin-right: 1em;
-}
