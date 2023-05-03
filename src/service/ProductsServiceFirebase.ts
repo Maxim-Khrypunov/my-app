@@ -18,7 +18,6 @@ export class ProductsServiceFirebase implements ProductsService {
     }
 
     async changeProduct(product: ProductType): Promise<void> {
-        product.id = product.id
         await setDoc(doc(this.productsCollection, product.id), product);
     }
 
