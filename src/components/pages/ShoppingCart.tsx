@@ -12,7 +12,7 @@ export const ShoppingCart: React.FC=()=>
     
     const newUserAuth = useSelector<any,string>(state =>state.auth.userAuth)
     const shopping: ShoppingProductType[] = useSelector<any, ShoppingProductType[]>(state => state.shoppingState.shopping);
-    const products: ShoppingProductDataType[]=useSelector<any,ShoppingProductDataType[]>(state=>state.productsState.products);
+    const products: ProductType[]=useSelector<any,ProductType[]>(state=>state.productsState.products);
     const tableData = useMemo(() => getTableData(), [products, shopping]);
     
     function getTableData():ShoppingProductDataType[]

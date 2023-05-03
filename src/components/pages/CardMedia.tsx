@@ -6,5 +6,5 @@ type Props =
 }
 export const CardMedia: React.FC<Props> = ({image}) =>
 {    
-   return <Avatar src={image} sx={{ width: "85%", height: "40vh", alignSelf: "center" }}/> 
+   return <Avatar src={image} sx={{ width: "85%", height: "35vh", alignSelf: "center" }}/> 
 }
