@@ -10,7 +10,6 @@ import { useMemo } from "react";
 import { ordersService } from "../../config/order-service-config";
 import { useNavigate } from "react-router-dom";
 
-
 export const ProductsClient: React.FC = () => {
     const navigate = useNavigate();
     const products: ProductType[] = useSelector<any, ProductType[]>(state => state.productsState.products);
@@ -60,11 +59,4 @@ export const ProductsClient: React.FC = () => {
     </Grid>
 </Box>
 } 
-
-
-    
-
-function getCountProduct(p: ProductType): any {
-    throw new Error("Function not implemented.");
-}
 

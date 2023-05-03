@@ -16,6 +16,12 @@ export class ProductsServiceFirebase implements ProductsService {
         product.id = getRandomNumbers(100000, 999999).toString();
         await setDoc(doc(this.productsCollection, product.id), product);
     }
+
+    async changeProduct(product: ProductType): Promise<void> {
+        product.id = product.id
+        await setDoc(doc(this.productsCollection, product.id), product);
+    }
+
     async addCategory(category: CategoryType): Promise<void> {
         await setDoc(doc(this.categoriesCollection, category.name), category);
     }
