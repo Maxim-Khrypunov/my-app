@@ -4,7 +4,7 @@ import { ProductType } from "../../model/Product Type"
 import { useSelector } from "react-redux"
 import { useRef, useState } from "react"
 import { productsService } from "../../config/products-service-config"
-import { Delete, Style } from "@mui/icons-material"
+import { Delete } from "@mui/icons-material"
 
 export const ProductsAdmin: React.FC=() =>
 {
@@ -13,8 +13,8 @@ const alertMessage = useRef<string>("");
 const products: ProductType[]=useSelector<any,ProductType[]>(state=>state.productsState.products);
 
 async function updateProduct(newData: ProductType, oldData: ProductType, updateType: string): Promise<any> 
-{
-  if (updateType==='price') {
+{  
+  if (updateType==='cost') {
     const rowDataNewPrice: ProductType = newData;
     const rowDataOldPrice: ProductType = oldData;
     if (rowDataNewPrice.cost > (rowDataOldPrice.cost*1.5)) {
@@ -32,7 +32,7 @@ async function updateProduct(newData: ProductType, oldData: ProductType, updateT
   } else if (updateType==='title') {
     const rowDataTitle: ProductType = newData;
     if (!rowDataTitle.title) {throw "Title must not be empty"};
-    await productsService.addProduct({
+    await productsService.changeProduct({
       id: rowDataTitle.id,
       cost: rowDataTitle.cost,
       title: rowDataTitle.title,
@@ -59,7 +59,7 @@ const columns: GridColDef[] =
 ]
 return <Box sx={{width:"90vw", heigth:"90vh"}}>
     <DataGrid processRowUpdate={(newData: any, oldData: any) =>
-    updateProduct(newData, oldData, 'price')}  onProcessRowUpdateError={(error)=>{alertMessage.current=error; setOpen(true)}} 
+    updateProduct(newData, oldData, 'cost')}  onProcessRowUpdateError={(error)=>{alertMessage.current=error; setOpen(true)}} 
     columns={columns} rows={products} getRowHeight={()=>"auto"}></DataGrid>
     <Snackbar open={open} autoHideDuration={6000} onClose={()=>setOpen(false)}>
         <Alert severity="error" sx={{ width: '40vw', fontSize:"1.5em" }}>
