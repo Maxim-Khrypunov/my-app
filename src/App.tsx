@@ -7,7 +7,7 @@ import { Orders } from './components/pages/Orders';
 import { ShoppingCart } from './components/pages/ShoppingCart';
 import { NotFound } from './components/pages/NotFound';
 import { routeElements } from './config/Layout-config';
-import { NavigatorDesktop } from './components/navigation/NavigatorDesktop';
+import { NavigatorDesktop } from './components/navigation/NavigatorDesktopNew';
 import { useDispatch, useSelector } from 'react-redux';
 import { TypeOFRouteForNavigator } from './model/TypeOFRouteForNavigator';
 import { Login } from './components/pages/Login';
@@ -19,6 +19,8 @@ import { Products } from './components/pages/Products';
 import { ordersService } from './config/order-service-config';
 import { shoppingActions } from './redux/ShoppingSlice';
 import { Subscription } from 'rxjs';
+import { CategoryType } from './model/Category Type';
+import { categoryActions } from './redux/categorySlice';
 
 
 function App() {
@@ -31,7 +33,6 @@ function App() {
       const routesRes =routeElements.filter(routePredicate)
       const logoutRoute = routesRes.find(route=>route.path==="/logout")
       if (logoutRoute) {logoutRoute.element = newUserAuth}
-      
       return routesRes;
    }
 
@@ -56,6 +57,17 @@ function App() {
       })
       return () =>subscription.unsubscribe()
    },[])
+
+   useEffect(()=>{
+      const subscription =productsService.getCategories()
+      .subscribe({
+         next:(category: CategoryType[])=>{ 
+            console.log(category)
+            dispatch(categoryActions.setCategoty(category))}
+      })
+      return () =>subscription.unsubscribe()
+   },[])
+
 
    useEffect(() => {
       let subscription: Subscription;

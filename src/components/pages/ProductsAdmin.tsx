@@ -1,70 +1,68 @@
-import { Alert, Avatar, Box, Snackbar, Typography } from "@mui/material"
+import { Alert, Avatar, Box, Button, Snackbar, Typography } from "@mui/material"
 import { DataGrid, GridActionsCellItem, GridColDef } from "@mui/x-data-grid"
 import { ProductType } from "../../model/Product Type"
 import { useSelector } from "react-redux"
 import { useRef, useState } from "react"
 import { productsService } from "../../config/products-service-config"
-import { Delete } from "@mui/icons-material"
+import { Add, Delete } from "@mui/icons-material"
+import { ProductForm } from "../forms/ProductForm"
 
-export const ProductsAdmin: React.FC=() =>
-{
-const [open, setOpen] =useState<boolean>(false);
-const alertMessage = useRef<string>("");
-const products: ProductType[]=useSelector<any,ProductType[]>(state=>state.productsState.products);
+export const ProductsAdmin: React.FC = () => {
+  // const { unit, minCost, maxCost}
+  const [open, setOpen] = useState<boolean>(false);
+  const [flagAdd, setflagAdd] = useState<boolean>(false);
+  const alertMessage = useRef<string>("");
+  const products: ProductType[] = useSelector<any, ProductType[]>(state => state.productsState.products);
 
-async function updateProduct(newData: ProductType, oldData: ProductType, updateType: string): Promise<any> 
-{  
-  if (updateType==='cost') {
-    const rowDataNewPrice: ProductType = newData;
-    const rowDataOldPrice: ProductType = oldData;
-    if (rowDataNewPrice.cost > (rowDataOldPrice.cost*1.5)) {
-      throw "Update cannot be greater than 50% from the existing cost";
-    };
-    await productsService.changeProduct({
-      id: rowDataNewPrice.id,
-      cost: rowDataNewPrice.cost,
-      title: rowDataNewPrice.title,
-      category: rowDataNewPrice.category,
-      unit: rowDataNewPrice.unit,
-      image: rowDataNewPrice.image
-    });
-    return newData;
-  } else if (updateType==='title') {
-    const rowDataTitle: ProductType = newData;
-    if (!rowDataTitle.title) {throw "Title must not be empty"};
-    await productsService.changeProduct({
-      id: rowDataTitle.id,
-      cost: rowDataTitle.cost,
-      title: rowDataTitle.title,
-      category: rowDataTitle.category,
-      unit: rowDataTitle.unit,
-      image: rowDataTitle.image
-    });
+  async function updateProduct(newData: ProductType, oldData: ProductType): Promise<any> {
+    if (newData.cost != oldData.cost) 
+      {if (newData.cost > (oldData.cost * 1.5)) { throw "Update cannot be greater than 50% from the existing cost" }}
+    if (newData.title != oldData.title) { if (!newData.title.trim()) { throw "Title must not be empty" }}
+    await productsService.changeProduct(newData);
     return newData;
   }
-}
+  function submitAddProduct(product:ProductType): string
+  {
+    let MessageForError=""
+    const checkProduct = products.find
+    ((productNew=>productNew.title === product.title&& productNew.title===product.category))
+    if(!checkProduct)
+    {productsService.addProduct(product);
+    setflagAdd(false)}
+    else {MessageForError="This product exists in the database"}
+    return  MessageForError
+  }
 
-const columns: GridColDef[] =
-[
- {field:"image", headerName:"Image", sortable:false, flex:1, renderCell:(params)=><Avatar src={`image/${params.value}`}
- sx={{width:"30%", height:"80px"}}/>, align: "center", headerAlign: "center"},
- {field:"title", headerName:"Title", flex:1, editable: true,  align: "center", headerAlign: "center"},
- {field:"category", headerName:"Category", flex:0.7,  align: "center", headerAlign: "center"},
- {field:"unit", headerName:"Unit", flex:0.5,  align: "center", headerAlign: "center"},
- {field:"cost", headerName:"ILS", flex:0.4, editable: true,  align: "center", headerAlign: "center"},
- {field:"actions", type:"actions", flex: 0.1,  align: "center", headerAlign: "center", getActions:(params) => [
-    <GridActionsCellItem label="remove" icon={<Delete></Delete>}
-    onClick={async ()=> await productsService.removeProduct(params.id as string)}/>
-  ]}
-]
-return <Box sx={{width:"90vw", heigth:"90vh"}}>
-    <DataGrid processRowUpdate={(newData: any, oldData: any) =>
-    updateProduct(newData, oldData, 'cost')}  onProcessRowUpdateError={(error)=>{alertMessage.current=error; setOpen(true)}} 
-    columns={columns} rows={products} getRowHeight={()=>"auto"}></DataGrid>
-    <Snackbar open={open} autoHideDuration={6000} onClose={()=>setOpen(false)}>
-        <Alert severity="error" sx={{ width: '40vw', fontSize:"1.5em" }}>
-          {alertMessage.current}
-        </Alert>
-      </Snackbar>
-</Box>
+  const columns: GridColDef[] =
+    [
+      {
+        field: "image", headerName: "Image", sortable: false, flex: 1, editable: true, renderCell: (params) => 
+        <Avatar src={params.value.startsWith("http")?params.value:`image/${params.value}`}
+        sx={{ width: "30%", height: "80px" }} />, align: "center", headerAlign: "center"
+      },
+      { field: "title", headerName: "Title", flex: 1, editable: true, align: "center", headerAlign: "center" },
+      { field: "category", headerName: "Category", flex: 0.7, align: "center", headerAlign: "center" },
+      { field: "unit", headerName: "Unit", flex: 0.5, align: "center", headerAlign: "center" },
+      { field: "cost", headerName: "ILS", flex: 0.4, editable: true, align: "center", headerAlign: "center" },
+      {
+        field: "actions", type: "actions", flex: 0.1, align: "center", headerAlign: "center", getActions: (params) => [
+          <GridActionsCellItem label="remove" icon={<Delete></Delete>}
+            onClick={async () => await productsService.removeProduct(params.id as string)} />
+        ]
+      }
+    ]
+  return !flagAdd ? <Box sx={{width:"100vw", display:"flex",flexDirection:"column", justifyContent:"centre", alignItems:"center"}}>
+    <Box sx={{ width: "90vw", heigth: "60vh" }}>
+    <DataGrid processRowUpdate={(newData:  ProductType, oldData: ProductType) =>
+      updateProduct(newData, oldData)} onProcessRowUpdateError={(error) => { alertMessage.current = error; setOpen(true) }}
+      columns={columns} rows={products} getRowHeight={() => "auto"}></DataGrid></Box>
+    <Button onClick={()=>setflagAdd(true)}>
+      <Add/>
+    </Button>
+    <Snackbar open={open} autoHideDuration={6000} onClose={() => setOpen(false)}>
+      <Alert severity="error" sx={{ width: '40vw', fontSize: "1.5em" }}>
+        {alertMessage.current}
+      </Alert>
+    </Snackbar>
+  </Box> : <ProductForm submitFn={submitAddProduct}/>
 }

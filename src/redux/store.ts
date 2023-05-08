@@ -3,6 +3,7 @@ import { authSliceReducer } from "./authSlice";
 import { codeReduser } from "./codeSlice";
 import { productsReducer } from "./productsSlice";
 import { shoppingReducer } from "./ShoppingSlice";
+import { categoryReducer } from "./categorySlice";
 
 
 export const store =configureStore({
@@ -11,4 +12,5 @@ reducer:{
     codeState:codeReduser,
     productsState:productsReducer,
     shoppingState:shoppingReducer,
+    categoryState:categoryReducer,
 }})

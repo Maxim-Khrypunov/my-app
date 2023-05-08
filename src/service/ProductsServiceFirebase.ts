@@ -61,6 +61,9 @@ getProducts():Observable<ProductType[]>
  {
     return collectionData(this.productsCollection) as Observable<ProductType[]>
 }
+getCategories():Observable<CategoryType[]>
+{
+    return collectionData(this.categoriesCollection) as Observable<CategoryType[]>
 }
 
-
+}

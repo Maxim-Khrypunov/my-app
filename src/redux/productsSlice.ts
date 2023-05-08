@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { ProductType } from "../model/Product Type";
 
-const initialState:{products: ProductType[]} =
+const initialState:{products: ProductType[]}=
 {
     products:[]
 }

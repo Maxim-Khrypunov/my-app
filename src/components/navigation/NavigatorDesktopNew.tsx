@@ -24,7 +24,7 @@ export const NavigatorDesktop: React.FC<Props> = ({subnav, routes}) => {
      to={route.path} label={route.element}/>)
   }
  return <Box sx={{
-  backgroundImage: 'url(https://img4.goodfon.ru/wallpaper/nbig/0/55/vypechka-bulochki-fon.jpg)',
+  
   width: "100%",
   height: "100%",
   display: "flex",
