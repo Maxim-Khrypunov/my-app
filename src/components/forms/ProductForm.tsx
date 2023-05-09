@@ -1,4 +1,4 @@
-import { Alert, Avatar, Box, Button, Card, CardMedia, FormControl, Grid, InputLabel, MenuItem, Select, SelectChangeEvent, Snackbar, TextField } from "@mui/material";
+import { Alert, Box, Button, CardMedia, Grid, MenuItem, Select, Snackbar, TextField } from "@mui/material";
 import { useState, useRef } from "react";
 import { ProductType } from "../../model/Product Type";
 import { useSelector } from "react-redux";
@@ -22,6 +22,9 @@ export const ProductForm: React.FC<Props> = ({ submitFn }) =>
     const category = useSelector<any,CategoryType[]>(state=>state.categoryState.category);
     const image = useRef<string>('');
     const title = useRef<string>('');
+    const unit = useRef<string>('');
+    const cost = useRef<string>('');
+    const categories = useRef<string>('');
     const alertMessage = useRef<string>('');
     
 
@@ -32,7 +35,8 @@ export const ProductForm: React.FC<Props> = ({ submitFn }) =>
         if (!alertMessage.current) {
             document.querySelector("form")!.reset();
         }
-        setOpen(true)
+        setOpen(true);
+
     }
 
     function imageHandler(event: any) {
@@ -50,19 +54,19 @@ export const ProductForm: React.FC<Props> = ({ submitFn }) =>
     function categoryHandler(event: any)
     {
         const newCategory = event.target.value;
-        title.current = newCategory;
+        categories.current = newCategory;
         setProduct({...product,category:newCategory});
     };
 
     function costHandler(event: any) {
         const newCost = event.target.value;
-        title.current = newCost;
+        cost.current = newCost;
         setProduct({...product, cost: newCost});
     }
 
     function unitHandler(event: any) {
         const newUnit = event.target.value;
-        title.current = newUnit;
+        unit.current = newUnit;
         setProduct({...product, unit: newUnit});
     }
 
@@ -107,7 +111,7 @@ export const ProductForm: React.FC<Props> = ({ submitFn }) =>
                 <Grid item xs={8} md={7} style={{ display: 'flex', alignItems: 'center' }}>
                     <h3>5.  Please indicate cost of product </h3>
                     <TextField label='Please indicate cost of product'
-                        fullWidth required type="any"
+                        fullWidth required type="number"
                         onChange={costHandler}
                          value={product.cost}
                          helperText={`plese write price from ${productParametersConfig.minCost} until ${productParametersConfig.maxCost}`}
