@@ -21,17 +21,17 @@ export const ProductsAdmin: React.FC = () => {
     await productsService.changeProduct(newData);
     return newData;
   }
-  function submitAddProduct(product:ProductType): string
-  {
-    let MessageForError=""
-    const checkProduct = products.find
-    ((productNew=>productNew.title === product.title&& productNew.title===product.category))
-    if(!checkProduct)
-    {productsService.addProduct(product);
-    setflagAdd(false)}
-    else {MessageForError="This product exists in the database"}
-    return  MessageForError
-  }
+  function submitAddProduct(product: ProductType): string {
+    let res = '';
+    if (products.find(p => p.title == product.title && p.unit == product.unit)) {
+        res = `product ${product.title} with unit ${product.unit} already exists`
+    } else {
+        productsService.addProduct(product);
+        setflagAdd(false);
+    }
+    
+    return res;
+}
 
   const columns: GridColDef[] =
     [
@@ -60,9 +60,9 @@ export const ProductsAdmin: React.FC = () => {
       <Add/>
     </Button>
     <Snackbar open={open} autoHideDuration={6000} onClose={() => setOpen(false)}>
-      <Alert severity="error" sx={{ width: '40vw', fontSize: "1.5em" }}>
-        {alertMessage.current}
-      </Alert>
-    </Snackbar>
+            <Alert severity="error" sx={{ width: '30vw', fontSize: '1.5em' }}>
+                {alertMessage.current}
+            </Alert>
+        </Snackbar>
   </Box> : <ProductForm submitFn={submitAddProduct}/>
 }

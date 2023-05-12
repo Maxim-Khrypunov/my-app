@@ -28,15 +28,15 @@ export const ProductForm: React.FC<Props> = ({ submitFn }) =>
     const alertMessage = useRef<string>('');
     
 
-    function onSubmitFn(event: any) 
-    {
+    function onSubmitFn(event: any) {
         event.preventDefault(); //canceling default form submit
-        alertMessage.current = submitFn(product);
-        if (!alertMessage.current) {
+        const errorMessage = submitFn(product);
+        if (!errorMessage) {
             document.querySelector("form")!.reset();
+        } else {
+            setOpen(true);
+            alertMessage.current = errorMessage;
         }
-        setOpen(true);
-
     }
 
     function imageHandler(event: any) {
@@ -72,7 +72,7 @@ export const ProductForm: React.FC<Props> = ({ submitFn }) =>
 
 
     return <Box>
-        <form onSubmit={onSubmitFn}>
+        <form onSubmit={onSubmitFn} onReset={()=>setProduct(initialProduct)}>
             <Grid container spacing={4} justifyContent={'center'}>
 
                 <Grid item xs={8} md={7} style={{ display: 'flex', alignItems: 'center' }}>
@@ -92,7 +92,7 @@ export const ProductForm: React.FC<Props> = ({ submitFn }) =>
                          onChange={titleHandler}/>
                 </Grid>
 
-                <Grid item xs={8} md={7} style={{ display: 'flex', alignItems: 'center' }}>
+                <Grid item xs={8} md={7} style={{ display: 'flex', alignItems:'center'}}>
                     <h3>3. Please indicate category of product</h3>
                     <Select label='Please indicate category of product'
                         required fullWidth value={product.category}
@@ -115,10 +115,9 @@ export const ProductForm: React.FC<Props> = ({ submitFn }) =>
                         onChange={costHandler}
                          value={product.cost}
                          helperText={`plese write price from ${productParametersConfig.minCost} until ${productParametersConfig.maxCost}`}
-                         inputProps={{min:`${productParametersConfig.minCost}`,max:`${productParametersConfig.maxCost}`}}/>
+                         inputProps={{min:`${productParametersConfig.minCost}`,max:`${productParametersConfig.maxCost}`, step:"0.1"}}
+                         />
                 </Grid>
-
-            
                 <Grid item container spacing={5} justifyContent={'center'} xs={12}>
                     <Grid item xs={4}>
                         <Button type='submit'>Submit</Button>

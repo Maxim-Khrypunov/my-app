@@ -85,8 +85,9 @@ export const ShoppingCart: React.FC = () => {
     <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
         <Button variant="outlined" onClick={ButtonDeleteAll} sx={{ marginRight: "2vw", background: "red", color: "black" }}>Delete all</Button>
-        <Button variant="outlined" sx={{ marginLeft: "2vw", background: "green", color: "black" }} >Make payment</Button>
-      </Box>
+        <Button onClick={async ()=> await ordersService.createOrder(newUserAuth,tableData)} variant="outlined" sx={{ marginLeft: "2vw", background: "green", color: "black" }} >Order</Button>
+        </Box>
     </Box>
+    
   </Box>
 }

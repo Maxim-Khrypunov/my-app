@@ -1,9 +1,7 @@
-
 import { Box, Button, Card, Grid, Typography } from "@mui/material";
 import { ProductType } from "../../model/Product Type";
 import { useSelector } from "react-redux";
 import { CardMedia } from "./CardMedia";
-import { CardActions } from "./CardActions";
 import { CardContent } from "./CardContent";
 import { ShoppingProductType } from "../../model/ShoppingProductType";
 import { useMemo } from "react";
@@ -36,7 +34,7 @@ export const ProductsClient: React.FC = () => {
         {products.map((product,index) => (
             <Grid item xs={12} sm={6} md={3} lg={3} key={product.id} >
                 <Card sx={{ backgroundColor:"beige",height: "100%", display: "flex", flexDirection: "column", justifyContent: "center" }}>
-                    <CardMedia image={`image/${product.image}`}/>
+                    <CardMedia image={product.image.startsWith("http")? product.image:`image/${product.image}`}/>
                     <CardContent title={product.title} unit={product.unit} cost={product.cost} category={product.category}></CardContent>
                     <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
                     <Box sx={{ display: 'flex', alignItems: 'center', marginBottom:"2vh"}}>
