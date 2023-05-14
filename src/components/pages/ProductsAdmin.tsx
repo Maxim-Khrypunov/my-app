@@ -6,6 +6,7 @@ import { useRef, useState } from "react"
 import { productsService } from "../../config/products-service-config"
 import { Add, Delete } from "@mui/icons-material"
 import { ProductForm } from "../forms/ProductForm"
+import { Confirmation } from "./Confirmation"
 
 export const ProductsAdmin: React.FC = () => {
   // const { unit, minCost, maxCost}
@@ -13,6 +14,11 @@ export const ProductsAdmin: React.FC = () => {
   const [flagAdd, setflagAdd] = useState<boolean>(false);
   const alertMessage = useRef<string>("");
   const products: ProductType[] = useSelector<any, ProductType[]>(state => state.productsState.products);
+  const title = useRef<string>("");
+  const content = useRef<string>("");
+  const confirmFn = useRef<(Ok: boolean)=>void>((OK)=> {});
+  const [openConformation, setOpenConformation] = useState<boolean>(false);
+
 
   async function updateProduct(newData: ProductType, oldData: ProductType): Promise<any> {
     if (newData.cost != oldData.cost) 
@@ -47,7 +53,17 @@ export const ProductsAdmin: React.FC = () => {
       {
         field: "actions", type: "actions", flex: 0.1, align: "center", headerAlign: "center", getActions: (params) => [
           <GridActionsCellItem label="remove" icon={<Delete></Delete>}
-            onClick={async () => await productsService.removeProduct(params.id as string)} />
+          onClick={async () => {
+            title.current = "Do you want to remove this product?";
+            content.current = `You are going to remove product from your shopping cart`;
+            confirmFn.current = removeOneProduct;
+            setOpenConformation(true);
+           async function removeOneProduct(isOk: boolean) {
+    if (isOk) { await productsService.removeProduct( params.id as string);
+    }
+    setOpenConformation(false);
+  }
+          }} />
         ]
       }
     ]
@@ -64,5 +80,8 @@ export const ProductsAdmin: React.FC = () => {
                 {alertMessage.current}
             </Alert>
         </Snackbar>
+        <Confirmation confirmFn={confirmFn.current} open={openConformation}
+         title={title.current} content={content.current}></Confirmation>
   </Box> : <ProductForm submitFn={submitAddProduct}/>
+
 }
