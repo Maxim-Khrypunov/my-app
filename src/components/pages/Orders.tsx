@@ -69,17 +69,30 @@ export const Orders: React.FC = () => {
                         setOpenContent(true);
                     }}/>]
                     if (newUserAuth.includes("admin")) {
-                        res.push(<GridActionsCellItem label="delivery"
+                        res.push(<Box><GridActionsCellItem label="delivery"
                          icon={<LocalShipping />}
                         disabled={!!params.row.deliveryDate}
                            onClick={async () => await delivery(params.id as string,
-                               new Date().toISOString().substring(0, 10))}/>)
+                               new Date().toISOString().substring(0, 10))}/>
+                               <GridActionsCellItem label="remove" icon={<Delete></Delete>}
+          onClick={async () => {
+            title.current = "Do you want to remove this order?";
+            content.current = `You are going to remove order`;
+            confirmFn.current = removeOneProduct;
+            setOpenConformation(true);
+           async function removeOneProduct(isOk: boolean) {
+    if (isOk) { await ordersService.removeShoppingProduct(newUserAuth,params.id as string);
+    }
+    setOpenConformation(false);
+  }
+          }} />
+                               </Box>)
    
                     }
                     return res;
                 }
-            }
-
+            },
+           
         ];
         
         if(newUserAuth.includes('admin')) {
@@ -139,5 +152,7 @@ export const Orders: React.FC = () => {
             </Box>
            
         </Modal>
+        <Confirmation confirmFn={confirmFn.current} open={openConformation}
+         title={title.current} content={content.current}></Confirmation>
     </Box>
 }
