@@ -42,7 +42,14 @@ export const Orders: React.FC = () => {
             productsAmount: o.shopping.length,
             cost: o.shopping.reduce((res, cur) => res + cur.cost * cur.count, 0),
             orderDate: o.orderDate, deliveryDate: o.deliveryDate
-        }));
+        })).sort((r1,r2)=>{
+            let res = 0;
+            if (!r1.deliveryDate && r2.deliveryDate){res =-1;}
+            else if(r1.deliveryDate && !r2.deliveryDate) {res = 1;}
+            else if (!r1.deliveryDate && !r2.deliveryDate) {res = r1.orderDate.localeCompare(r2.orderDate);}
+            else res = r2.deliveryDate.localeCompare(r1.deliveryDate);
+            return res;
+        });
     }
     function getColumns(): GridColDef[] {
         const commonColumns: GridColDef[] = [

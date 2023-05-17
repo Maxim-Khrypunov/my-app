@@ -1,8 +1,9 @@
-import { AppBar, Box, Tabs, Tab } from "@mui/material";
 import { Link, Outlet, useNavigate } from "react-router-dom";
-import React, { ReactNode, useEffect } from "react";
 import { TypeOFRouteForNavigator } from "../../model/TypeOFRouteForNavigator";
-import './navigators.css'
+import { ReactNode, useEffect } from "react";
+import { AppBar, Box, Tab, Tabs } from "@mui/material";
+import React from "react";
+
 export type Props = {
     subnav?: boolean,
     routes: TypeOFRouteForNavigator[]

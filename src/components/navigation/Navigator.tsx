@@ -1,29 +1,13 @@
-import { NavLink, Outlet, useNavigate } from "react-router-dom"
-import { TypeOFRouteForNavigator } from "../../model/TypeOFRouteForNavigator"
-import {useEffect} from "react"
-import './navigators.css'
+import { useMediaQuery } from "@mui/material";
+import { NavigatorDesktop } from "./NavigatorDesktopNew";
+import { TypeOFRouteForNavigator } from "../../model/TypeOFRouteForNavigator";
+import { NavigatorPortrait } from "./NavigatorPortrait";
 
-type Props=
-{
-    subnavigator?:boolean,
-    routes:TypeOFRouteForNavigator[]  
+type Props = {
+    subnav?: boolean,
+    routes: TypeOFRouteForNavigator[]
 }
-export const Navigator: React.FC<Props> =({subnavigator,routes}) =>
-{
-    const navigator = useNavigate()
-   useEffect(()=>{ 
-   if(!subnavigator)
-   {navigator(routes[0].path)}},[])
-
-    function getElements()
-    {
-        return routes.map((elem,index)=>
-        <li className="navigator-item"><NavLink to={elem.path} key={index}>{elem.element}</NavLink></li>
-        )
-    }
-
-    return <div style={{marginTop:"10vh"}}>
-    <ul className={`subnavigator-item ${subnavigator ? 'subnavigator-sublist' : ''}`}>{getElements()}</ul>  
-    <Outlet></Outlet>
-    </div>
+export const Navigator: React.FC<Props> = (props) => {
+    const navigatorDesktop =  useMediaQuery('(min-width:600px)');
+    return navigatorDesktop ? <NavigatorDesktop routes={props.routes}/>: <NavigatorPortrait routes={props.routes}/>;
 }

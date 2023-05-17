@@ -109,10 +109,6 @@ export const ShoppingCart: React.FC = () => {
         setOpenConformation(false);
     }
 
-
-
-
-
   const totalCostOfAllProducts = tableData.reduce((acc, price) => acc + price.totalCost, 0)
 
   return <Box sx={{ width: "80vw", heigth: "80vh" }}>

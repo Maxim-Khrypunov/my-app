@@ -22,6 +22,7 @@ import { Subscription } from 'rxjs';
 import { CategoryType } from './model/Category Type';
 import { categoryActions } from './redux/categorySlice';
 import { ordersActions } from './redux/ordersSlice';
+import { Navigator } from './components/navigation/Navigator';
 
 
 function App() {
@@ -99,7 +100,7 @@ function App() {
  
    return <BrowserRouter>
       <Routes>
-         <Route path="/" element={<NavigatorDesktop routes={newRoutes}/>}>
+      <Route path="/" element={<Navigator routes={newRoutes}/>}>
             <Route index element={<Home />} />
             <Route path="/customers" element={<Customers />} />
             <Route path="orders" element={<Orders />} />

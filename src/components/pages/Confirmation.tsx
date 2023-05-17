@@ -6,10 +6,11 @@ type Props = {
     title: string;
     content: string;
     confirmFn: (Ok: boolean) => void;
-    open: boolean
+    open: boolean;
+    buttons?:string[]
 }
 
-export  const Confirmation: React.FC<Props> = ({title, confirmFn, content, open}) => {
+export  const Confirmation: React.FC<Props> = ({title, confirmFn, content, open, buttons}) => {
   const handleClose = (Ok: boolean) => {
     confirmFn(Ok);
   };
@@ -31,8 +32,8 @@ export  const Confirmation: React.FC<Props> = ({title, confirmFn, content, open}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => handleClose(false)}>Cancel</Button>
-          <Button onClick={() => handleClose(true)} autoFocus>Accept</Button>
+          <Button onClick={() => handleClose(false)}> {buttons? buttons[0] : "Cancel"}</Button>
+          <Button onClick={() => handleClose(true)} >{buttons? buttons[1]: "Accept"}</Button>
         </DialogActions>
       </Dialog>
       </Box>
